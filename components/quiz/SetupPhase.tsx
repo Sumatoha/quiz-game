@@ -270,7 +270,7 @@ export function SetupPhase({ rounds, setRounds, onNext }: SetupPhaseProps) {
                   fontFamily: "'Plus Jakarta Sans', sans-serif",
                 }}
               >
-                Сгенерируй квиз через ИИ за 30 секунд
+                Есть готовые вопросы? Преобразуй их через ИИ
               </span>
             </div>
             <ol
@@ -287,8 +287,24 @@ export function SetupPhase({ rounds, setRounds, onNext }: SetupPhaseProps) {
                 Скопируй промпт ниже и открой{" "}
                 <strong style={{ color: C.violet }}>ChatGPT / Claude / Gemini</strong>
               </li>
-              <li>Вставь промпт, в конце впиши свои темы и количество раундов</li>
-              <li>Сохрани ответ ИИ в файл <code style={{ background: C.white, padding: "1px 6px", borderRadius: 4, fontFamily: "'JetBrains Mono', monospace", fontSize: 11 }}>quiz.json</code> и загрузи сюда ↓</li>
+              <li>
+                В конце промпта вставь свои вопросы — в любом виде (список, текст, таблица, содержимое файла)
+              </li>
+              <li>
+                Ответ ИИ сохрани как{" "}
+                <code
+                  style={{
+                    background: C.white,
+                    padding: "1px 6px",
+                    borderRadius: 4,
+                    fontFamily: "'JetBrains Mono', monospace",
+                    fontSize: 11,
+                  }}
+                >
+                  quiz.json
+                </code>{" "}
+                и загрузи сюда ↓
+              </li>
             </ol>
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
               <Button
