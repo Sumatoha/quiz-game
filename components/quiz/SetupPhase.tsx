@@ -18,9 +18,10 @@ interface SetupPhaseProps {
   rounds: Round[];
   setRounds: (rounds: Round[]) => void;
   onNext: () => void;
+  onResetAll: () => void;
 }
 
-export function SetupPhase({ rounds, setRounds, onNext }: SetupPhaseProps) {
+export function SetupPhase({ rounds, setRounds, onNext, onResetAll }: SetupPhaseProps) {
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
   const [showImport, setShowImport] = useState(false);
   const [importErr, setImportErr] = useState("");
@@ -733,14 +734,33 @@ export function SetupPhase({ rounds, setRounds, onNext }: SetupPhaseProps) {
           gap: 12,
         }}
       >
-        <Button
-          color={C.cream}
-          textColor={C.ink}
-          onClick={addRound}
-          style={{ boxShadow: "none", border: `2px dashed ${C.inkPale}` }}
-        >
-          + Раунд
-        </Button>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+          <Button
+            color={C.cream}
+            textColor={C.ink}
+            onClick={addRound}
+            style={{ boxShadow: "none", border: `2px dashed ${C.inkPale}` }}
+          >
+            + Раунд
+          </Button>
+          <Button
+            color={C.cream}
+            textColor={C.inkMuted}
+            small
+            onClick={() => {
+              if (
+                window.confirm(
+                  "Очистить всё — вопросы, команды и прогресс игры? Это нельзя отменить.",
+                )
+              ) {
+                onResetAll();
+              }
+            }}
+            style={{ boxShadow: "none", border: `2px solid ${C.inkPale}` }}
+          >
+            🗑 Очистить
+          </Button>
+        </div>
         <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
           <Tag bg={C.cream} color={C.inkMuted}>
             {totalQ} вопросов

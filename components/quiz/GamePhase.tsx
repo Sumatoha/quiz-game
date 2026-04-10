@@ -2,8 +2,8 @@
 import { useMemo, useState } from "react";
 import { C, TOPIC_HEADER_COLORS } from "@/lib/constants";
 import type { Question, Round, Team } from "@/lib/types";
-import { Button } from "./ui/Button";
 import { Tag } from "./ui/Tag";
+import { Button } from "./ui/Button";
 import { QuestionModal } from "./QuestionModal";
 import { Scoreboard } from "./Scoreboard";
 
@@ -11,14 +11,28 @@ interface GamePhaseProps {
   rounds: Round[];
   teams: Team[];
   setTeams: (teams: Team[]) => void;
+  curRound: number;
+  setCurRound: (n: number) => void;
+  answered: Set<string>;
+  setAnswered: (updater: (prev: Set<string>) => Set<string>) => void;
+  turn: number;
+  setTurn: (n: number) => void;
   onFinish: () => void;
 }
 
-export function GamePhase({ rounds, teams, setTeams, onFinish }: GamePhaseProps) {
-  const [curRound, setCurRound] = useState(0);
-  const [answered, setAnswered] = useState<Set<string>>(new Set());
+export function GamePhase({
+  rounds,
+  teams,
+  setTeams,
+  curRound,
+  setCurRound,
+  answered,
+  setAnswered,
+  turn,
+  setTurn,
+  onFinish,
+}: GamePhaseProps) {
   const [activeQ, setActiveQ] = useState<Question | null>(null);
-  const [turn, setTurn] = useState(0);
 
   const round = rounds[curRound];
   const activeTeam = teams[turn % teams.length];
@@ -42,9 +56,10 @@ export function GamePhase({ rounds, teams, setTeams, onFinish }: GamePhaseProps)
       );
     }
     if (activeQ) {
+      const questionId = activeQ.id;
       setAnswered((prev) => {
         const next = new Set(prev);
-        next.add(activeQ.id);
+        next.add(questionId);
         return next;
       });
     }
