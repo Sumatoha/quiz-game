@@ -75,6 +75,18 @@ export function GamePhase({
     setTurn(0);
   };
 
+  const skipRound = () => {
+    const confirmMsg = isLast
+      ? "Завершить последний раунд и перейти к результатам? Вернуться нельзя."
+      : "Пропустить текущий раунд и перейти к следующему? Вернуться нельзя.";
+    if (!window.confirm(confirmMsg)) return;
+    if (isLast) {
+      onFinish();
+    } else {
+      goNextRound();
+    }
+  };
+
   const maxQuestions = Math.max(
     0,
     ...round.topics.map((t) => t.questions.length),
@@ -109,9 +121,20 @@ export function GamePhase({
               {round.name}
             </h2>
           </div>
-          <Tag bg={C.cream} color={C.inkMuted}>
-            {done}/{total}
-          </Tag>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+            <Tag bg={C.cream} color={C.inkMuted}>
+              {done}/{total}
+            </Tag>
+            <Button
+              color={C.cream}
+              textColor={C.inkMuted}
+              small
+              onClick={skipRound}
+              style={{ boxShadow: "none", border: `2px solid ${C.inkPale}` }}
+            >
+              {isLast ? "Завершить →" : "Пропустить раунд →"}
+            </Button>
+          </div>
         </div>
 
         <div
