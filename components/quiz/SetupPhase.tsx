@@ -587,7 +587,7 @@ export function SetupPhase({ rounds, setRounds, onNext }: SetupPhaseProps) {
                     <div
                       style={{
                         display: "grid",
-                        gridTemplateColumns: "26px 1fr 1fr 60px 22px",
+                        gridTemplateColumns: "26px 1fr 1fr 76px 22px",
                         gap: "3px 6px",
                         marginBottom: 6,
                       }}
@@ -612,7 +612,7 @@ export function SetupPhase({ rounds, setRounds, onNext }: SetupPhaseProps) {
                         key={q.id}
                         style={{
                           display: "grid",
-                          gridTemplateColumns: "26px 1fr 1fr 60px 22px",
+                          gridTemplateColumns: "26px 1fr 1fr 76px 22px",
                           gap: "3px 6px",
                           alignItems: "start",
                           marginBottom: 4,
@@ -653,22 +653,24 @@ export function SetupPhase({ rounds, setRounds, onNext }: SetupPhaseProps) {
                           rows={1}
                         />
                         <Input
-                          type="number"
-                          value={q.points}
+                          numeric
+                          value={q.points === 0 ? "" : q.points}
                           onChange={(v) =>
                             updateQuestionField(
                               round.id,
                               topic.id,
                               q.id,
                               "points",
-                              parseInt(v, 10) || 0,
+                              v === "" ? 0 : parseInt(v, 10) || 0,
                             )
                           }
+                          placeholder="0"
                           style={{
                             textAlign: "center",
-                            fontSize: 13,
-                            fontWeight: 700,
+                            fontSize: 14,
+                            fontWeight: 800,
                             background: C.white,
+                            padding: "10px 6px",
                           }}
                         />
                         <button

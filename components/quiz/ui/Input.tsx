@@ -7,7 +7,7 @@ interface InputProps {
   onChange: (value: string) => void;
   placeholder?: string;
   style?: CSSProperties;
-  type?: "text" | "number";
+  numeric?: boolean;
   onKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void;
 }
 
@@ -16,14 +16,25 @@ export function Input({
   onChange,
   placeholder,
   style,
-  type = "text",
+  numeric,
   onKeyDown,
 }: InputProps) {
+  const handleChange = (raw: string) => {
+    if (numeric) {
+      // Keep only digits — prevents leading zeros weirdness and letters.
+      onChange(raw.replace(/[^\d]/g, ""));
+      return;
+    }
+    onChange(raw);
+  };
+
   return (
     <input
-      type={type}
+      type="text"
+      inputMode={numeric ? "numeric" : undefined}
+      pattern={numeric ? "[0-9]*" : undefined}
       value={value}
-      onChange={(e) => onChange(e.target.value)}
+      onChange={(e) => handleChange(e.target.value)}
       placeholder={placeholder}
       onKeyDown={onKeyDown}
       style={{
