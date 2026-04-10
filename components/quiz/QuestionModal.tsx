@@ -116,9 +116,13 @@ export function QuestionModal({
         padding: 16,
         animation: "fadeIn 0.15s",
       }}
+      onClick={() => {
+        if (phase === "done") onClose();
+      }}
     >
       <div
         className="pop-card"
+        onClick={(e) => e.stopPropagation()}
         style={{
           padding: "28px 32px",
           maxWidth: 560,
