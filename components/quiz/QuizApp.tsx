@@ -92,6 +92,7 @@ export function QuizApp() {
             setTeams={setTeams}
             onBack={() => setPhase("setup")}
             onStart={() => setPhase("game")}
+            onExit={resetAll}
           />
         )}
         {phase === "game" && (
@@ -106,6 +107,7 @@ export function QuizApp() {
             turn={turn}
             setTurn={setTurn}
             onFinish={() => setPhase("results")}
+            onExit={resetAll}
           />
         )}
         {phase === "results" && (

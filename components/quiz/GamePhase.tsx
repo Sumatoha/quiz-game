@@ -18,6 +18,7 @@ interface GamePhaseProps {
   turn: number;
   setTurn: (n: number) => void;
   onFinish: () => void;
+  onExit: () => void;
 }
 
 export function GamePhase({
@@ -31,6 +32,7 @@ export function GamePhase({
   turn,
   setTurn,
   onFinish,
+  onExit,
 }: GamePhaseProps) {
   const [activeQ, setActiveQ] = useState<Question | null>(null);
 
@@ -73,6 +75,16 @@ export function GamePhase({
   const goNextRound = () => {
     setCurRound(curRound + 1);
     setTurn(0);
+  };
+
+  const exitGame = () => {
+    if (
+      window.confirm(
+        "Завершить игру и стереть весь квиз? Вопросы, команды и счёт — всё удалится. Вернуться нельзя.",
+      )
+    ) {
+      onExit();
+    }
   };
 
   const skipRound = () => {
@@ -133,6 +145,15 @@ export function GamePhase({
               style={{ boxShadow: "none", border: `2px solid ${C.inkPale}` }}
             >
               {isLast ? "Завершить →" : "Пропустить раунд →"}
+            </Button>
+            <Button
+              color={C.cream}
+              textColor={C.danger}
+              small
+              onClick={exitGame}
+              style={{ boxShadow: "none", border: `2px solid ${C.danger}40` }}
+            >
+              ✕ Выйти
             </Button>
           </div>
         </div>

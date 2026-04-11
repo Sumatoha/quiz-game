@@ -11,9 +11,10 @@ interface TeamsPhaseProps {
   setTeams: (teams: Team[]) => void;
   onBack: () => void;
   onStart: () => void;
+  onExit: () => void;
 }
 
-export function TeamsPhase({ teams, setTeams, onBack, onStart }: TeamsPhaseProps) {
+export function TeamsPhase({ teams, setTeams, onBack, onStart, onExit }: TeamsPhaseProps) {
   const [name, setName] = useState("");
 
   const addTeam = () => {
@@ -134,7 +135,15 @@ export function TeamsPhase({ teams, setTeams, onBack, onStart }: TeamsPhaseProps
         )}
       </div>
 
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          flexWrap: "wrap",
+          gap: 8,
+        }}
+      >
         <Button
           color={C.cream}
           textColor={C.ink}
@@ -143,14 +152,33 @@ export function TeamsPhase({ teams, setTeams, onBack, onStart }: TeamsPhaseProps
         >
           ← Назад
         </Button>
-        <Button
-          color={C.yellow}
-          textColor={C.ink}
-          onClick={onStart}
-          disabled={teams.length < 2}
-        >
-          Начать игру ⚡
-        </Button>
+        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+          <Button
+            color={C.cream}
+            textColor={C.danger}
+            small
+            onClick={() => {
+              if (
+                window.confirm(
+                  "Завершить и стереть весь квиз? Вопросы, команды и счёт — всё удалится.",
+                )
+              ) {
+                onExit();
+              }
+            }}
+            style={{ boxShadow: "none", border: `2px solid ${C.danger}40` }}
+          >
+            ✕ Выйти
+          </Button>
+          <Button
+            color={C.yellow}
+            textColor={C.ink}
+            onClick={onStart}
+            disabled={teams.length < 2}
+          >
+            Начать игру ⚡
+          </Button>
+        </div>
       </div>
     </div>
   );
